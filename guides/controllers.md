@@ -170,19 +170,24 @@ If need be the parent resource can also be specified on inline routes in additio
 
 ## Optional Parameters
 
-You can specify optional "Rails 3 style" parameters in url patterns in Padrino with brackets:
+You can specify optional "Rails 3 style" parameters in url patterns in Padrino, using brackets:
+
+    # app/controllers/example.rb
+    SimpleApp.controllers do
+      get '/:param(/:param_opt)(/:param_opt2)' do
+        # Controller matches '/:param', '/:param/:param_opt' and'/:param/:param_opt/:param_opt2'
+        # being :param_opt and :param_opt2 optional without depending on each other's presence
+        # In this example, :param is mandatory
+      end
+    end
+
+You can also nest the conditions for matching the routes:
 
     # app/controllers/example.rb
     SimpleApp.controllers do
       get '/:param(/:param_opt(/:param_opt2))' do
         # Controller matches '/:param', '/:param/:param_opt' and'/:param/:param_opt/:param_opt2'
         # being :param_opt optional, and :param_opt2 optional if :param_opt is present
-        # In this example, :param is mandatory
-      end
-      
-      get '/:param(/:param_opt)(/:param_opt2)' do
-        # Controller matches '/:param', '/:param/:param_opt' and'/:param/:param_opt/:param_opt2'
-        # being :param_opt and :param_opt2 optional without depending on each other's presence
         # In this example, :param is mandatory
       end
     end
